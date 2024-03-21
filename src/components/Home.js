@@ -17,6 +17,8 @@ function Home() {
   const [showModalDeleteUser, setShowModalDeleteUser] = useState(false)
   const [dataUserDelete, setDataUserDelete] = useState({})
   const [pageNumber, setPageNumber] = useState(0);
+  const [sortBy, setSortBy]=useState("asc");
+  const [sortField, setSortField] = useState("id")
   const usersPerPage = 5;
   const pagesVisited = pageNumber * usersPerPage;
 
@@ -75,6 +77,26 @@ function Home() {
     setListUser(cloneListUser)
   }
 
+  const handleSort =(sortby, sortfield)=>{
+    setSortBy(sortby)
+    setSortField(sortfield)
+    let cloneListUser=_.cloneDeep(listUser)
+    cloneListUser=_.orderBy(cloneListUser, [sortField], [sortBy])
+    setListUser(cloneListUser)
+  }
+  const handleSearch=(event)=>{
+    let keyword=event.target.value;
+    let cloneListUser=_.cloneDeep(listUser)
+    cloneListUser=cloneListUser.filter(item=>item.email.includes(keyword) || item.name.includes(keyword) )
+    if(keyword){
+      setListUser(cloneListUser)
+    }
+    else{
+      getListUser()
+    }
+    
+  }
+
   return (
     <div className="home">
       <div className="home-header">
@@ -90,19 +112,37 @@ function Home() {
           <div className="table-search">
             <div className="search-container">
               <i className="fas fa-search"></i>
-              <input type="text" placeholder="Search..." />
+              <input type="text" placeholder="Search name or email..." onChange={(e)=>handleSearch(e)} />
             </div>
           </div>
           <div className="table-create-data">
-            <button className="btn btn-success" onClick={()=>handleCreateUser()}>Add new</button>
+            <button className="btn btn-success" onClick={()=>handleCreateUser()}>
+            <i className="fas fa-plus-circle"></i> Add new</button>
           </div>
         </div>
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
+              <th>ID &nbsp;
+                <span>
+                  <i className="fas fa-arrow-up" onClick={()=>handleSort("asc", "id")}></i>
+                  <i className="fas fa-arrow-down" onClick={()=>handleSort("desc", "id")}></i>
+                </span>
+              </th>
+              <th>Name  &nbsp;
+                <span>
+                  <i className="fas fa-arrow-up" onClick={()=>handleSort("asc", "name")}></i>
+                  <i className="fas fa-arrow-down" onClick={()=>handleSort("desc", "name")}></i>
+                </span>
+
+              </th>
+              <th>Email  &nbsp;
+                <span>
+                  <i className="fas fa-arrow-up" onClick={()=>handleSort("asc", "email")}></i>
+                  <i className="fas fa-arrow-down" onClick={()=>handleSort("desc", "email")}></i>
+                </span>
+
+              </th>
               <th>Phone</th>
               <th>Address</th>
               <th>Action</th>

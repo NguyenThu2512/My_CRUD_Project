@@ -37,3 +37,7 @@
 .form-add-user label {
     font-weight: 700
 }
+
+.home-table-container table i {
+    cursor: pointer;
+}
