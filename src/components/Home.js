@@ -5,7 +5,7 @@ import { getUser } from '../services/UserService';
 import ModalCreateUser from './ModalCreateUser';
 import ReactPaginate from 'react-paginate';
 import ModalEditUser from './ModalEditUser';
-import _ from "lodash";
+import _, { debounce } from "lodash";
 import ModalDeleteUser from './ModalDeleteUser';
 
 function Home() {
@@ -84,7 +84,7 @@ function Home() {
     cloneListUser=_.orderBy(cloneListUser, [sortField], [sortBy])
     setListUser(cloneListUser)
   }
-  const handleSearch=(event)=>{
+  const handleSearch=debounce((event)=>{
     let keyword=event.target.value;
     let cloneListUser=_.cloneDeep(listUser)
     cloneListUser=cloneListUser.filter(item=>item.email.includes(keyword) || item.name.includes(keyword) )
@@ -95,7 +95,7 @@ function Home() {
       getListUser()
     }
     
-  }
+  }, 500)
 
   return (
     <div className="home">
