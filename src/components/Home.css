@@ -1,0 +1,39 @@
+.home-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #001C40;
+    color: #fff;
+}
+
+.home-header div {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.table-search .search-container {
+    border: 1px solid rgb(202, 201, 201);
+    border-radius: 30px;
+    padding: 3px 10px
+}
+
+.table-search .search-container input {
+    border: none;
+    outline: none;
+    padding-left: 10px;
+}
+
+.table-search i {
+    color: gray;
+}
+
+.form-add-user {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 0 20px;
+}
+
+.form-add-user label {
+    font-weight: 700
+}
